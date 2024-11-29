@@ -4,7 +4,9 @@ import { Input } from "@/components/ui/input";
 export default function Home() {
   return (
     <div>
-      <Button variant="primary">Primar</Button>
+      <Button variant="primary" className="xs:display-block md:display-none ">
+        Primary
+      </Button>
       <Button variant="secondary">Secondary</Button>
       <Button variant="destructive">Destructive</Button>
       <Button variant="ghost">Ghost</Button>
