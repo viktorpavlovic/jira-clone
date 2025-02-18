@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { DottedSeparator } from "./dotted-separator";
@@ -14,7 +15,9 @@ export const Sidebar = () => {
       <WorkspaceSwitcher />
       <DottedSeparator className="my-4" />
 
-      <Navigation />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Navigation />
+      </Suspense>
     </aside>
   );
 };
