@@ -13,7 +13,6 @@ export const Sidebar = () => {
       <DottedSeparator className="my-4" />
       <WorkspaceSwitcher />
       <DottedSeparator className="my-4" />
-
       <Navigation />
     </aside>
   );
