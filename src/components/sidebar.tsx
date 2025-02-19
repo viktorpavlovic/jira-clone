@@ -12,7 +12,9 @@ export const Sidebar = () => {
         <Image src="/logo.svg" alt="Logo" width={164} height={48}></Image>
       </Link>
       <DottedSeparator className="my-4" />
-      <WorkspaceSwitcher />
+      <Suspense fallback={<div>Loading...</div>}>
+        <WorkspaceSwitcher />
+      </Suspense>
       <DottedSeparator className="my-4" />
 
       <Suspense fallback={<div>Loading...</div>}>
