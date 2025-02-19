@@ -3,7 +3,7 @@
 import { z } from "zod";
 import Image from "next/image";
 import { useRef } from "react";
-import { ArrowLeftIcon, Car, ImageIcon } from "lucide-react";
+import { ArrowLeftIcon, ImageIcon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
