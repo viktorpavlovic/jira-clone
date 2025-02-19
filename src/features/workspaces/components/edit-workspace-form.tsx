@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
+import { useConfirm } from "@/hooks/use-confirm";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { DottedSeparator } from "@/components/dotted-separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,6 +27,7 @@ import { cn } from "@/lib/utils";
 import { Workspace } from "../types";
 import { updateWorkspaceSchema } from "../schemas";
 import { useUpdateWorkspace } from "../api/use-update-workspace";
+import { useDeleteWorkspace } from "../api/use-delete-workspace";
 
 interface EditWorkspaceFormProps {
   onCancel?: () => void;
@@ -40,6 +42,15 @@ export const EditWorkspaceForm = ({
 
   const { mutate, isPending } = useUpdateWorkspace();
 
+  const { mutate: deleteWorkspace, isPending: isDeletingWorkspace } =
+    useDeleteWorkspace();
+
+  const [DeleteDialog, confirmDelete] = useConfirm(
+    "Delete Workspace",
+    "This action cannot be undone",
+    "destructive"
+  );
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const form = useForm<z.infer<typeof updateWorkspaceSchema>>({
@@ -49,6 +60,20 @@ export const EditWorkspaceForm = ({
       image: initialValues.imageUrl ?? "",
     },
   });
+
+  const handleDelete = async () => {
+    const ok = await confirmDelete();
+
+    if (!ok) return;
+    deleteWorkspace(
+      { param: { workspaceId: initialValues.$id } },
+      {
+        onSuccess: () => {
+          router.push("/");
+        },
+      }
+    );
+  };
 
   const onSubmit = (values: z.infer<typeof updateWorkspaceSchema>) => {
     const finalValues = {
@@ -77,6 +102,7 @@ export const EditWorkspaceForm = ({
 
   return (
     <div className="flex flex-col gap-y-4">
+      <DeleteDialog />
       <Card className="w-full h-full border-none shadow-none">
         <CardHeader className="flex flex-row items-center gap-x-4 space-y-0">
           <Button
@@ -222,7 +248,7 @@ export const EditWorkspaceForm = ({
               variant="destructive"
               type="button"
               disabled={isPending}
-              onClick={() => {}}
+              onClick={handleDelete}
             >
               Delete Workspace
             </Button>
