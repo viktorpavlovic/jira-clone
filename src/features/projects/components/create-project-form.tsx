@@ -6,7 +6,6 @@ import { useRef } from "react";
 import { ImageIcon } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
 
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -33,7 +32,6 @@ interface CreateProjectFormProps {
 
 export const CreateProjectForm = ({ onCancel }: CreateProjectFormProps) => {
   const workspaceId = useWorkspaceId();
-  const router = useRouter();
 
   const { mutate, isPending } = useCreateProject();
 
@@ -56,7 +54,7 @@ export const CreateProjectForm = ({ onCancel }: CreateProjectFormProps) => {
     mutate(
       { form: finalValues },
       {
-        onSuccess: ({ data }) => {
+        onSuccess: () => {
           form.reset();
           // TODO: Redirect to project screen
         },
