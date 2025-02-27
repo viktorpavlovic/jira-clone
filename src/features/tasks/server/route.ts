@@ -102,12 +102,12 @@ const app = new Hono()
       );
 
       const populatedTasks = tasks.documents.map((task) => {
-        const project = projects.documents.find((project) => {
-          project.$id === task.projectId;
-        });
-        const assignee = assignees.find((assignee) => {
-          assignee.$id === task.assigneeId;
-        });
+        const project = projects.documents.find(
+          (project) => project.$id === task.projectId
+        );
+        const assignee = assignees.find(
+          (assignee) => assignee.$id === task.assigneeId
+        );
         return { ...tasks, project, assignee };
       });
 
