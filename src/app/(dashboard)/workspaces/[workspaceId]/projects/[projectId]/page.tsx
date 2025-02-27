@@ -5,9 +5,11 @@ import { redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 
-import { ProjectAvatar } from "@/features/projects/components/project-avatar";
 import { getProject } from "@/features/projects/queries";
 import { getCurrent } from "@/features/auth/queries";
+
+import { TaskViewSwitcher } from "@/features/tasks/components/task-view-switcher";
+import { ProjectAvatar } from "@/features/projects/components/project-avatar";
 
 interface ProjectIdPageProps {
   params: { projectId: string };
@@ -45,6 +47,7 @@ const ProjectIdPage = async ({ params }: ProjectIdPageProps) => {
           </Button>
         </div>
       </div>
+      <TaskViewSwitcher />
     </div>
   );
 };
