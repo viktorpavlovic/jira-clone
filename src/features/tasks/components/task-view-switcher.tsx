@@ -17,7 +17,7 @@ export const TaskViewSwitcher = () => {
 
   const { open } = useCreateTaskModal();
 
-  const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({
+  const { data: tasks } = useGetTasks({
     workspaceId,
   });
 
