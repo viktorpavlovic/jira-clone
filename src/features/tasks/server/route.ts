@@ -84,7 +84,7 @@ const app = new Hono()
       );
 
       const members = await databases.listDocuments(
-        MEMBERS_ID,
+        DATABASE_ID,
         PROJECTS_ID,
         assigneeIds.length > 0 ? [Query.contains("$id", assigneeIds)] : []
       );
