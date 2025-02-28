@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { Button, type ButtonProps } from "@/components/ui/button";
-import { ResposiveModal } from "@/components/responsive-modal";
+import { ResponsiveModal } from "@/components/responsive-modal";
 import {
   Card,
   CardContent,
@@ -40,7 +40,7 @@ export const useConfirm = (
   };
 
   const ConfirmationDialog = () => (
-    <ResposiveModal open={promise !== null} onOpenChange={handleClose}>
+    <ResponsiveModal open={promise !== null} onOpenChange={handleClose}>
       <Card className="w-full h-full border-none shadow-none">
         <CardContent className="pt-8">
           <CardHeader>
@@ -65,7 +65,7 @@ export const useConfirm = (
           </div>
         </CardContent>
       </Card>
-    </ResposiveModal>
+    </ResponsiveModal>
   );
   return [ConfirmationDialog, confirm];
 };
