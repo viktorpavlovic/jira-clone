@@ -6,7 +6,7 @@ import { zValidator } from "@hono/zod-validator";
 import { Project } from "@/features/projects/types";
 import { getMember } from "@/features/members/utils";
 
-import { DATABASE_ID, MEMBERS_ID, PROJECTS_ID, TASKS_ID } from "@/config";
+import { DATABASE_ID, PROJECTS_ID, TASKS_ID } from "@/config";
 import { createAdminClient } from "@/lib/appwrite";
 import { sessionMiddleware } from "@/lib/session-middleware";
 
@@ -84,7 +84,7 @@ const app = new Hono()
       );
 
       const members = await databases.listDocuments(
-        MEMBERS_ID,
+        DATABASE_ID,
         PROJECTS_ID,
         assigneeIds.length > 0 ? [Query.contains("$id", assigneeIds)] : []
       );
