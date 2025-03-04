@@ -6,9 +6,9 @@ import { zValidator } from "@hono/zod-validator";
 import { Project } from "@/features/projects/types";
 import { getMember } from "@/features/members/utils";
 
-import { DATABASE_ID, MEMBERS_ID, PROJECTS_ID, TASKS_ID } from "@/config";
 import { createAdminClient } from "@/lib/appwrite";
 import { sessionMiddleware } from "@/lib/session-middleware";
+import { DATABASE_ID, MEMBERS_ID, PROJECTS_ID, TASKS_ID } from "@/config";
 
 import { TaskStatus } from "../types";
 import { createTaskSchema } from "../schemas";
@@ -33,7 +33,7 @@ const app = new Hono()
       const databases = c.get("databases");
       const user = c.get("user");
 
-      const { status, search, workspaceId, projectId, dueDate, assigneeId } =
+      const { workspaceId, projectId, status, search, assigneeId, dueDate } =
         c.req.valid("query");
 
       const member = await getMember({
@@ -43,7 +43,7 @@ const app = new Hono()
       });
 
       if (!member) {
-        return c.json({ error: "Unauthorized" }, 400);
+        return c.json({ error: "Unauthorized" }, 401);
       }
 
       const query = [
@@ -84,8 +84,8 @@ const app = new Hono()
       );
 
       const members = await databases.listDocuments(
+        DATABASE_ID,
         MEMBERS_ID,
-        PROJECTS_ID,
         assigneeIds.length > 0 ? [Query.contains("$id", assigneeIds)] : []
       );
 
@@ -131,7 +131,7 @@ const app = new Hono()
       });
 
       if (!member) {
-        return c.json({ error: "Unauthorized" }, 400);
+        return c.json({ error: "Unauthorized" }, 401);
       }
 
       const highestPositionTask = await databases.listDocuments(
