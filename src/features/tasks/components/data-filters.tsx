@@ -22,7 +22,7 @@ interface DataFiltersProps {
   hideProjectFilter?: boolean;
 }
 
-export const DataFilters = ({ hideProjectFilter }: DataFiltersProps) => {
+export const DataFilters = ({}: DataFiltersProps) => {
   const workspaceId = useWorkspaceId();
 
   const { data: projects, isLoading: isLoadingProjects } = useGetProjects({
