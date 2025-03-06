@@ -10,7 +10,7 @@ import { createAdminClient } from "@/lib/appwrite";
 import { sessionMiddleware } from "@/lib/session-middleware";
 import { DATABASE_ID, MEMBERS_ID, PROJECTS_ID, TASKS_ID } from "@/config";
 
-import { TaskStatus } from "../types";
+import { Task, TaskStatus } from "../types";
 import { createTaskSchema } from "../schemas";
 
 const app = new Hono()
@@ -72,7 +72,11 @@ const app = new Hono()
         query.push(Query.search("name", search));
       }
 
-      const tasks = await databases.listDocuments(DATABASE_ID, TASKS_ID, query);
+      const tasks = await databases.listDocuments<Task>(
+        DATABASE_ID,
+        TASKS_ID,
+        query
+      );
 
       const projectIds = tasks.documents.map((task) => task.projectId);
       const assigneeIds = tasks.documents.map((task) => task.assigneeId);
@@ -108,10 +112,15 @@ const app = new Hono()
         const assignee = assignees.find(
           (assignee) => assignee.$id === task.assigneeId
         );
-        return { ...tasks, project, assignee };
+        return { ...task, project, assignee };
       });
 
-      return c.json({ data: { ...tasks, documents: populatedTasks } });
+      return c.json({
+        data: {
+          ...tasks,
+          documents: populatedTasks,
+        },
+      });
     }
   )
   .post(
