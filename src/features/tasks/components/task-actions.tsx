@@ -13,7 +13,7 @@ interface TaskActionsProps {
   children: React.ReactNode;
 }
 
-export const TaskActions = ({ id, projectId, children }: TaskActionsProps) => {
+export const TaskActions = ({ children }: TaskActionsProps) => {
   return (
     <div className="flex justify-end">
       <DropdownMenu modal={false}>
